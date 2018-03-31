@@ -1,0 +1,3 @@
+[submodule "TinyJuliaExamples"]
+	path = TinyJuliaExamples
+	url = https://github.com/Unitec-Segebre/TinyJuliaExamples.git
