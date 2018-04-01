@@ -30,6 +30,7 @@ run2: $(TARGET)
 	./$(TARGET) ./TinyJuliaExamples/helloworld.jl
 	./$(TARGET) ./TinyJuliaExamples/if.jl
 	./$(TARGET) ./TinyJuliaExamples/Relational.jl
+	./$(TARGET) ./TinyJuliaExamples/several.jl
 	./$(TARGET) ./TinyJuliaExamples/while.jl
 
 clean:

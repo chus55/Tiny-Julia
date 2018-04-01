@@ -1,17 +1,25 @@
-# While loops loop while a condition is true
-function while_func()::Int
-    x::Int = 0
-    while x < 4
-        println(x)
-        x = x + 1
-    end
-    return x
+el_global::Int = 100
+el_bool::Bool = false
+function IsPair(val::Int)::Bool
+    return val % 2 == 0
 end
 
-println(while_func())
-# prints:
-#   0
-#   1
-#   2
-#   3
-#   4
+function WeirdStuff(val::Int)::Int
+    valor::Int = val * 2;
+
+    for i = 0:valor
+        if i == 5
+            println("The favorite number, ", i, ", has been reached: ", valor);
+        end
+        println("Is pair ", i, " the val: ", IsPair(i))
+    end
+
+    return valor * el_global
+end
+
+println("#", el_global, " is pair: ", IsPair(el_global))
+println("Weird stuff from val: ", el_global, " now: ", WeirdStuff(el_global))
+
+if el_bool == false
+    println("All a lie.")
+end

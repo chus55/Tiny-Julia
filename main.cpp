@@ -2,6 +2,7 @@
 #include "ast.h"
 #include "tokens.h"
 
+extern Statement *input;
 extern FILE *yyin;
 
 int main(int argc, char *argv[])
@@ -15,5 +16,10 @@ int main(int argc, char *argv[])
 		fprintf(stderr, "Can't open file %s\n", argv[1]);
 		return 2;
 	}
+    input = NULL;
     yyparse();
+    if (input != 0){
+		//input->execute();
+		((BlockStatement *)input)->printStatement();
+	}
 }
