@@ -9,8 +9,8 @@ using namespace std;
 
 extern int yylineno;
 
-#define BOOL 0
-#define INT 1
+#define TYPE_BOOL 0
+#define TYPE_INT 1
 #define TYPE_TRUE 1
 #define TYPE_FALSE 0
 
@@ -111,8 +111,8 @@ param_element:	TK_VAR type_assign	{ $$ = new std::pair<string, int>(*$1, $2); }
 type_assign:	TK_DOUBLE_COLON type	{ $$ = $2; }
 ;
 
-type:	RW_INT	{ $$ = INT; }
-	|	RW_BOOL	{ $$ = BOOL; }
+type:	RW_INT	{ $$ = TYPE_INT; }
+	|	RW_BOOL	{ $$ = TYPE_BOOL; }
 ;
 
 return_statement:	RW_RETURN expression	{ $$ = new ReturnStatement($2); }

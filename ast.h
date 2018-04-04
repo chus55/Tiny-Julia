@@ -9,6 +9,8 @@
 #include <stdio.h>
 #include <math.h>
 #include <typeinfo>
+#include <algorithm>
+#include <vector>
 
 using namespace std;
 
@@ -22,39 +24,39 @@ struct ExprContext {
 };
 
 enum ExpressionKind {
-    LOGICAL_OR_EXPRESSION,
+    LOGICAL_OR_EXPRESSION,//0
     LOGICAL_AND_EXPRESSION,
-    INCLUSIVE_OR_EXPRESSION,
+    INCLUSIVE_OR_EXPRESSION,//2
     EXCLUSIVE_OR_EXPRESSION,
-    AND_EXPRESSION,
+    AND_EXPRESSION,//4
     EQUALITY_EXPRESSION,
-    EQUAL_EXPRESSION,
+    EQUAL_EXPRESSION,//6
     NOT_EQUAL_EXPRESSION,
-    RELATIONAL_EXPRESSION,
+    RELATIONAL_EXPRESSION,//8
     LESS_THAN_EXPRESSION,
-    GREATER_THAN_EXPRESSION,
+    GREATER_THAN_EXPRESSION,//10
     LESS_EQUAL_EXPRESSION,
-    GREATER_EQUAL_EXPRESSION,
+    GREATER_EQUAL_EXPRESSION,//12
     SHIFT_EXPRESSION,
-    SHIFT_LEFT_EXPRESSION,
+    SHIFT_LEFT_EXPRESSION,//14
     SHIFT_RIGHT_EXPRESSION,
-    ADDITIVE_EXPRESSION,
+    ADDITIVE_EXPRESSION,//16
     ADD_EXPRESSION,
-    SUB_EXPRESSION,
+    SUB_EXPRESSION,//18
     MULTIPLICATIVE_EXPRESSION,
-    MUL_EXPRESSION,
+    MUL_EXPRESSION,//20
     DIV_EXPRESSION,
-    MOD_EXPRESSION,
+    MOD_EXPRESSION,//22
     EXPONENTIAL_EXPRESSION,
-    EXPO_EXPRESSION,
+    EXPO_EXPRESSION,//24
     BITWISE_NOT_EXPRESSION,
-    NEGATION_EXPRESSION,
+    NEGATION_EXPRESSION,//26
     POSFIX_EXPRESSION,
-    ID_EXPRESSION,
+    ID_EXPRESSION,//28
     NUM_EXPRESSION,
-    BOOL_EXPRESSION,
+    BOOL_EXPRESSION,//30
     ARRAY_ACCESS_EXPRESSION,
-    FUNCTION_EXPRESSION,
+    FUNCTION_EXPRESSION,//32
     STRING_EXPRESSION
 };
 
@@ -363,6 +365,7 @@ public:
 //Statements//
 
 enum StatementKind {
+    GLOBAL_CONTEXT,
     ARRAY_DECLARATION_STATEMENT,
     ARRAY_ASSIGN_STATEMENT,
     DECLARATION_STATEMENT,
@@ -378,6 +381,18 @@ enum StatementKind {
     FUNCTION_DECLARATION_STATEMENT,
     FUNCTION_CALL_STATEMENT,
     RETURN_STATEMENT
+};
+
+struct StatementContext {
+    map<string, pair<int, int>> variables;
+    map<string, pair<int, int>> functionParams;
+    map<string, int> localArraySizes;
+	bool isGlobal;
+    bool lockedContext;
+    int statement_type;
+    list<string> important_labels;
+	struct StatementContext *previous_context;
+	struct StatementContext *next_context;
 };
 
 class Statement {
@@ -463,7 +478,10 @@ public:
 	void GenerateFile();
     int getKind() { return BLOCK_STATEMENT; }
     void printStatement();
-	string genFunctions();
+    string genFunctions();
+    void genLiteralStrings();
+    void getGlobalVariables();
+    int getGlobalLocalVariables();
 
 	string genCode();
 
@@ -565,7 +583,8 @@ class FunctionDeclarationStatement: public Statement {
 public:
 	FunctionDeclarationStatement(string varName, ParamTypeMap *varList, int type, Statement *blockstatement) {
 		this->varName = varName;
-		this->varList = varList;
+        this->varList = varList;
+        this->type = type;
 		this->blockstatement = blockstatement;
 	}
     int getKind() { return FUNCTION_DECLARATION_STATEMENT; }
@@ -575,6 +594,7 @@ public:
 
     string varName;
     ParamTypeMap *varList;
+    int type;
 	Statement *blockstatement;
 };
 
@@ -608,5 +628,7 @@ public:
 
 //End of statements//
 
+void tempInit();
+string genDataSection();
 
 #endif

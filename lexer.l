@@ -76,6 +76,6 @@
 
 <comment>"=#"		{ BEGIN(INITIAL); }
 <comment>.|\n		{/* Do nothing */}
-<comment><<EOF>>	{ printf("Error, block comment was never closed.\n"); exit(0); }
+<comment><<EOF>>	{ printf("Error, block comment was never closed.\n"); terminate(); }
 
 %%

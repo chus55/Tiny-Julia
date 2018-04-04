@@ -16,10 +16,13 @@ int main(int argc, char *argv[])
 		fprintf(stderr, "Can't open file %s\n", argv[1]);
 		return 2;
 	}
-    input = NULL;
+	input = NULL;
+	tempInit();
     yyparse();
     if (input != 0){
 		//input->execute();
-		((BlockStatement *)input)->printStatement();
+		//((BlockStatement *)input)->printStatement();
+		((BlockStatement *)input)->GenerateFile();
 	}
+	cout<<"/--------------------------------------------------------------------------/"<<endl;
 }
