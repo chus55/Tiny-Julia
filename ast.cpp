@@ -566,6 +566,7 @@ void BlockStatement::GenerateFile()
 	ss << "ret" << endl;
 	/*genLiteralStrings();
 	ss << genDataSection() << endl;*/
+	cout<<ss.str();
     std::ofstream out("result.S"); 
     out << ss.str(); 
     out.close();
@@ -1119,7 +1120,7 @@ void BitwiseNotExpression::genCode(ExprContext &ctx) {
 	}
 	else if(expr_kind == ID_EXPRESSION){
 		IdExpression* idExpr = ((IdExpression *)(expr));
-		int expr_type = functionTypes[idExpr->varName];
+		int expr_type = getVariableType(idExpr->varName);
 		if (expr_type == BOOL_T){
 			string negate_false = newLabel();
 			string end_label = newLabel();

@@ -24,5 +24,5 @@ int main(int argc, char *argv[])
 		//((BlockStatement *)input)->printStatement();
 		((BlockStatement *)input)->GenerateFile();
 	}
-	cout<<"/--------------------------------------------------------------------------/"<<endl;
+	//cout<<"/--------------------------------------------------------------------------/"<<endl;
 }

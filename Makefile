@@ -3,6 +3,7 @@ EXPR_PARSER_SRC=parser.cpp
 EXPR_LEXER_SRC=lexer.cpp
 C_SRCFILES=$(EXPR_PARSER_SRC) $(EXPR_LEXER_SRC) ast.cpp main.cpp
 OBJ_FILES=${C_SRCFILES:.cpp=.o}
+TESTS=Arithmetic Arrays Bitwise BubbleSort comments Factorial functions helloworld if printFormat QuickSort recursion Relational several while_break while
 .PHONY: clean
 
 $(TARGET): $(OBJ_FILES)
@@ -102,4 +103,15 @@ clean:
 	rm -f $(TARGET)
 	rm -f $(OBJ_FILES)
 	rm -f parser.output
-	rm -f result result.o result.S
+	rm -f result result.o result.S run.asm
+
+check: $(TARGET) $(TESTS)
+
+$(TESTS):
+	@./$(TARGET) UnitTesting/tests/$@.jl > run.asm
+	@nasm -felf run.asm
+	@gcc -m32 -o run run.o
+	@./run > UnitTesting/generated/$@
+	@./UnitTesting/compare.o UnitTesting/results/$@ UnitTesting/generated/$@
+	@rm -f run.asm run.o run
+	@rm -f UnitTesting/generated/$@

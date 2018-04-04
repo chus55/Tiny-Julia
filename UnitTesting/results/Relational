@@ -1,0 +1,12 @@
+trueValue = true
+falseValue = false
+x = 10
+y = 20
+x > y = false
+x >= y = false
+x < y = true
+x <= y = true
+x == y = false
+x != y = true
+trueValue == falseValue = false
+trueValue != falseValue =true
