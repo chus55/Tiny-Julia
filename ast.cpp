@@ -776,8 +776,8 @@ void compareRelational(ExprContext &ctx, Expr *expr1, Expr *expr2, string compar
 	newcode += true_label + ":\n";
 	newcode += "mov " + newplace + ", 1\n";
 	newcode += end_label + ":\n";
-	cout<<"ctx1.code: \n"<<ctx1.code<<endl;
-	cout<<"ctx2.code: \n"<<ctx2.code<<endl;
+	//cout<<"ctx1.code: \n"<<ctx1.code<<endl;
+	//cout<<"ctx2.code: \n"<<ctx2.code<<endl;
 
 	ctx.code = newcode;
     ctx.place = newplace;
